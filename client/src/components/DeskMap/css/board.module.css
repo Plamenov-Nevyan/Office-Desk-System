@@ -1,5 +1,18 @@
 .droppable-container {
-    /* display: flex;
-    gap: 6rem;
-    flex-wrap: wrap; */
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 1em;
+}
+
+.drag-drop-context-container {
+    border: 2px solid indianred;
+    padding: 2rem;
+}
+
+.list-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 1rem;
 }

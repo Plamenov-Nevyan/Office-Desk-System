@@ -11,7 +11,7 @@ export function Home(){
     form: ''
    })
 
-   const showModal = (e,form) => {
+   const showModal = (e,form) => {   
     e.preventDefault()
     setModalData(oldData => {return {show : true, 'form' : form}})
    }
