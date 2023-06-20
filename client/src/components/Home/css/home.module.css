@@ -1,0 +1,34 @@
+.home-banner {
+    display: flex;
+}
+
+.home-banner-left {
+    flex: 1 1 50%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.home-banner-left h4 {
+    font-size: clamp(2rem, 5vw + 1rem, 2.5rem);
+}
+
+.home-banner-left h1 {
+    font-size: clamp(2.5rem, 5vw + 1rem, 3.5rem);
+    text-align: center;
+}
+
+.home-banner-right {
+    flex: 1 1 50%;
+}
+
+.home-banner-right img {
+    width: 100%;
+    height: auto;
+}
+
+.logo-down-layer {
+    position: relative;
+    z-index: -1;
+}

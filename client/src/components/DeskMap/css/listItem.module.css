@@ -1,0 +1,12 @@
+.desk {
+    width: 100%;
+    height: 100%;
+    padding: 0.2rem 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    border: 2px solid;
+    background: bisque;
+    border-radius: 0.4rem;
+}

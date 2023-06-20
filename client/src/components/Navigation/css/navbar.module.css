@@ -1,0 +1,9 @@
+.main-nav-links {
+    display: flex;
+    list-style-type: none;
+    gap: 2rem;
+}
+
+.main-nav-links a {
+    font-size: clamp(1rem, 4vw + 1rem, 2rem);
+}
