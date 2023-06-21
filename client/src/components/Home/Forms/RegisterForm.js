@@ -1,5 +1,6 @@
 import styles from '../css/forms.module.css'
 import { useState } from 'react'
+import { submitUserData } from '../../../services/authServices'
 
 export function RegisterForm(){
   const [formValues, setFormValues] = useState({
@@ -8,9 +9,14 @@ export function RegisterForm(){
     password : ''
   })
 
+  const onSubmitHandler = async (e) => {
+    e.preventDefault()
+    await submitUserData(formValues)
+  }
+
   const onFormValChange = (e) => setFormValues((oldValues) => {return {...oldValues, [e.target.name] : e.target.value}})
     return (
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={(e) => onSubmitHandler(e)}>
             <fieldset className={styles["auth-fieldset"]}>    
                 <label htmlFor="username">Username:</label>
                 <input 

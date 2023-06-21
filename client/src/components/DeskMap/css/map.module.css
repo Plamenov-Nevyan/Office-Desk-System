@@ -1,0 +1,56 @@
+.subheader {
+    background: bisque;
+    border-radius: 0.5rem;
+}
+
+.subheader ul {
+    display: flex;
+    gap: 2rem;
+    list-style-type: none;
+    padding: 2rem;
+}
+
+.subheader ul li {
+    font-size: clamp(1rem, 4vw + 1rem, 1.5rem);
+    color: navy;
+    font-weight: 600;
+    padding: .4rem;
+    border-radius: .5rem;
+    transition: ease-in 200ms;
+}
+
+.subheader ul li:hover {
+    background-color: #d4d0d0;
+    cursor: pointer;
+}
+
+.subheader ul > li {
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+}
+
+.subheader ul > li svg {
+    width: 2rem;
+    height: 2rem;
+}
+
+.symbol-form {
+    flex: 1 1 100%;
+}
+
+.symbol-form fieldset {
+    display: flex;
+    flex-direction: column;
+}
+
+.symbol-form fieldset:nth-child(2) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.symbol-form fieldset:nth-child(2) label {
+    flex: 1 1 100%;
+}
+

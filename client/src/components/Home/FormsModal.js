@@ -3,8 +3,10 @@ import {RegisterForm} from './Forms/RegisterForm'
 import styles from './css/modal.module.css'
 
 
+
 export function FormsModal({closeModal, form}){
     
+
 
     return (
         <div className={styles.modal}>
