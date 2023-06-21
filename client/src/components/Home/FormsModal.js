@@ -28,8 +28,10 @@ export function FormsModal({closeModal, form, errorHandler}){
     }, [socket])
 
     useEffect(() => {
-        socket.on('userLogin', (session) => {
+        socket.on('userLoggedIn', (session) => {
             setToStorage(session)
+            closeModal()
+            navigate('/map')
         })
     }, [socket])
 

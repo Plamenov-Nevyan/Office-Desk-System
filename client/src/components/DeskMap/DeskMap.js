@@ -1,7 +1,10 @@
-import {useState, useReducer} from "react";
+import {useState, useContext, useEffect} from "react";
 import {Header} from "../Navigation/Header";
 import {Board} from "./Board";
 import styles from './css/map.module.css'
+import { SocketContext } from "../../contexts/socketContext";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
+
 
 let desks = [
     {id : 'zxcadsdds'},
@@ -16,31 +19,49 @@ export function DeskMap(){
 const [listLength, setListLength] = useState(2)  // the amount of desks per list
 const [newDeskValues, setNewDeskValues] = useState({
         name : '',
-        file: true,
-        link: false,
-        symbol : undefined
+        symbol : ''
 })
 const [showNewDeskForm, setShowNewDeskForm] = useState(false)
+const socket = useContext(SocketContext)
+const {getFromStorage} = useLocalStorage()
+const [desks, setDesks] = useState([])
+
+console.log(desks)
+
+useEffect(() => {
+  socket.emit('getDesks', (getFromStorage('id')))
+}, [])
+
+useEffect(() => {
+    socket.on('receiveDesks', (desks) => {
+        setDesks([...desks])
+    })
+}, [socket])
 
 const onShowNewDeskForm = () => showNewDeskForm ? setShowNewDeskForm(false) : setShowNewDeskForm(true)
 
 const onDeskValChange = (e) => {
-    console.log(e.target)
-    e.preventDefault()
-    if(e.target.type === 'radio') {
-        e.target.id === 'file' 
-        ? setNewDeskValues((oldValues) => {return{...oldValues, 'file':true, link:false}})
-        : setNewDeskValues((oldValues) => {return{...oldValues, 'file':false, link:true}})
-    }else {
-    let newValues = {
-        ...newDeskValues,
-       [ e.target.name] :   e.target.type === 'radio' ? e.target.value : e.target.value
-    }
-    setNewDeskValues({...newValues})
-    }
+    setNewDeskValues((oldValues) => {
+        return {
+            ...oldValues,
+            [e.target.name] : e.target.value
+        }
+    })
 }
 
-console.log(newDeskValues)
+
+const onNewDeskSubmit = (e) => {
+    e.preventDefault()
+    socket.emit('newDeskRegister', ([newDeskValues, getFromStorage('id')]))
+}
+
+useEffect(() => {
+    socket.on('newDeskAdded', (newDesk) => {
+        setDesks(desks => [...desks, newDesk])
+    })
+}, [socket])
+
+
 
 return (
 <>
@@ -55,7 +76,7 @@ return (
                       : <svg onClick={() => onShowNewDeskForm()} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg>
                     }
                    { showNewDeskForm &&  
-                   <form className={styles['symbol-form']}>
+                   <form className={styles['symbol-form']} onSubmit={(e) => onNewDeskSubmit(e)}>
                         <fieldset>
                             <label htmlFor="desk-name">Desk name:</label>
                             <input 
@@ -68,49 +89,17 @@ return (
                              />
                         </fieldset>
                         <fieldset>
-                            <label>Upload file or paste link?</label>
+                        <label htmlFor="desk-symbol">Symbol URL:</label>
                             <input 
-                                className={styles['symbol-checkbox']} 
-                                type='radio' 
-                                name = 'symbol'
-                                id="file" 
-                                value={newDeskValues.file}
+                                className={styles['symbol-input-link']} 
+                                type="text" 
+                                id="desk-symbol" 
+                                name="symbol" 
+                                value={newDeskValues.symbol} 
                                 onChange={(e) => onDeskValChange(e)}
-                             />
-                            <input
-                                className={styles['symbol-checkbox']} 
-                                type='radio' 
-                                name = 'symbol' 
-                                id="link" 
-                                value={newDeskValues.link}
-                                onChange={(e) => onDeskValChange(e)}
-                              />
+                            />
                         </fieldset>
-                        <fieldset>
-                            { newDeskValues.file === true
-                                ? <>
-                                    <label htmlFor="desk-symbol">Upload File:</label>
-                                    <input 
-                                        className={styles['symbol-input-file']} 
-                                        type="file" 
-                                        id="desk-symbol" 
-                                        name="symbol" 
-                                        onChange={(e) => onDeskValChange(e)}
-                                    />
-                                  </>
-                                : <>
-                                    <label htmlFor="desk-symbol">Paste URL:</label>
-                                    <input 
-                                        className={styles['symbol-input-link']} 
-                                        type="text" 
-                                        id="desk-symbol" 
-                                        name="symbol" 
-                                        value={newDeskValues.symbol} 
-                                        onChange={(e) => onDeskValChange(e)}
-                                    />
-                                 </>
-                            }
-                        </fieldset>
+                        <button>Create</button>
                     </form>}
                 </li>
                 <li>

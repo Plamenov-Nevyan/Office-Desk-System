@@ -38,8 +38,8 @@ export function Navbar({showModal}){
                 <li><a onClick={(e) => onLogout(e)} className={styles.inactive}>Logout</a></li>  
              </>
              : <>
-                <li><a onClick={(e) => showModal(e, 'login')} >Login</a></li>  
-                <li><a onClick={(e) => showModal(e, 'register')} >Sign Up</a></li>  
+                <li><a onClick={(e) => showModal(e, 'login')} className={styles.inactive} >Login</a></li>  
+                <li><a onClick={(e) => showModal(e, 'register')} className={styles.inactive} >Sign Up</a></li>  
              </>
             }
 

@@ -4,7 +4,7 @@ import { Draggable } from "react-beautiful-dnd";
 export function ListItem({desk, index}){
 
     return (
-        <Draggable key={desk.id} draggableId={desk.id} index={index}> 
+        <Draggable key={desk._id} draggableId={desk._id} index={index}> 
         {(provided, snapshot) => (  
             <div  
                 ref={provided.innerRef}  
@@ -12,7 +12,7 @@ export function ListItem({desk, index}){
                 {...provided.dragHandleProps}  
             >  
                 <div className={styles.desk}>
-                    <p>{desk.id}</p>
+                    <p>{desk.name}</p>
                 </div>
             </div>  
         )}  

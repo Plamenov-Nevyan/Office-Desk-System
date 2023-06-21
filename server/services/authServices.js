@@ -24,14 +24,19 @@ const registerUser = async (userData, constants) => {
 
  const loginUser = async (userData) => {
     let user = await User.findOne({email: userData.email})
-    if(user){
-        let isPassCorrect = await bcryptjs.compare(userData.password, user.password)
-        if(isPassCorrect){
-           return createSession(user.username, user.email, user._id)
 
-        }else {
-            throw new Error('Email and/or password is incorrect!')
-        }
+    if(user){
+        try{
+            let isPassCorrect = await bcryptjs.compare(userData.password, user.password)
+            if(isPassCorrect){
+            return createSession(user.username, user.email, user._id)
+
+            }else {
+                throw new Error('Email and/or password is incorrect!')
+            }
+      }catch(err){
+            console.log(err)
+      }
     }else {
         throw new Error('Email and/or password is incorrect!')
     }

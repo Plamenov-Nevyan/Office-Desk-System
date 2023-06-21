@@ -12,7 +12,7 @@ export function DraggableDesk({list, prefix}){
                 ref={provided.innerRef}  
             >  
                 {list.map((desk, index) => (  
-                    <ListItem key={desk.id} desk={desk} index={index} />
+                    <ListItem key={desk._id} desk={desk} index={index} />
                 ))}  
                 {provided.placeholder}
             </div>  
