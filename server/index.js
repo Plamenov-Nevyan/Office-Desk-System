@@ -1,18 +1,51 @@
-import expressConfig from "./config/express"
-import mongoConfig from "./config/mongoDB"
-import cors from "cors"
-import { keyConstants } from "./config/constants"
-import express from 'express'
-import { Socket } from "socket.io"
+const expressConfig = require("./config/express.js")
+const mongoConfig = require("./config/dbConfig.js")
+const cors = require("cors")
+const keyConstants =  require("./config/constants.js")
+const express = require('express')
+const {createServer}  = require('http')
+const userAuth = require("./services/authServices.js")
 
 const app = express()
 const http = createServer(app)
 
-const socketIo = require("socket.io")(http, {
+const socketIo = require('socket.io')(http, {
     cors : {
         origin : "http://localhost:3000"
     }
 })
 
+socketIo.on('connection', (socket) => {
+    socket.on('disconnect', () => {
+        socket.disconnect()
+    })
+
+    socket.on('userSignUp', async (userData) => {
+        try{
+        let session = await userAuth.registerUser(userData, keyConstants)
+        socketIo.to(socket.id).emit('userRegistered', (session))
+        }catch(err){
+            socketIo.to(socket.id).emit('error', (err))
+        }
+    })
+
+    socket.on('userLogin', async (userData) => {
+        try{
+        let session = await userAuth.loginUser(userData, keyConstants)
+  
+        socketIo.to(socket.id).emit('userLoggedIn', (session))
+        }catch(err){
+            socketIo.to(socket.id).emit('error', (err))
+        }
+    })
+})
 expressConfig(app)
 app.use(cors())
+
+
+mongoConfig()
+.then(() => http.listen(keyConstants.SERVER_PORT, () => {
+    console.log(`Surver is running on port ${keyConstants.SERVER_PORT}...`)
+ })  
+)
+.catch((err) => console.log(err))

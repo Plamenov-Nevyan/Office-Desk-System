@@ -1,4 +1,4 @@
-import mongoose from "mongoose"
-import env from "./envConfig"
+const mongoose = require('mongoose')
+const keyConstants = require('./constants.js')
 
-export default () => mongoose.connect(env.MONGO_URI)
+module.exports = () => mongoose.connect(keyConstants.MONGO_URI)

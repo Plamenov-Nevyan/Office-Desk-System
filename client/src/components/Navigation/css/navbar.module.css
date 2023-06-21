@@ -7,3 +7,26 @@
 .main-nav-links a {
     font-size: clamp(1rem, 4vw + 1rem, 2rem);
 }
+
+.inactive {
+    text-decoration: none;
+    color: black;
+    padding: 0.4rem 1.5rem;
+    transition: ease-in 200ms;
+}
+
+.active {
+    text-decoration: none;
+    color: black;
+    background: cornflowerblue;
+    padding: 0.4rem 1.5rem;
+    border-radius: 0.7rem;
+    color: chartreuse;
+}
+
+.inactive:hover {
+    cursor: pointer;
+    background: cornflowerblue;
+    border-radius: 0.7rem;
+    color: chartreuse;
+}

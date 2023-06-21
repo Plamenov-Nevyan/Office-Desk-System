@@ -5,7 +5,7 @@ import logo from './images/logo.png'
 
 export function Header({showModal}) {
 
-
+  
     return (
         <header className={styles.header}>
             <div className={styles["logo-container"]}>

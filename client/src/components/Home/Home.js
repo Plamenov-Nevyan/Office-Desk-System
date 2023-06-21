@@ -11,18 +11,25 @@ export function Home(){
     form: ''
    })
 
+   const [error, setError] = useState('')
+
    const showModal = (e,form) => {   
     e.preventDefault()
     setModalData(oldData => {return {show : true, 'form' : form}})
    }
 
+   const errorHandler = (error) => {
+    closeModal()
+    setError(error)
+}
+console.log(showModal)
 
    const closeModal = () =>  setModalData(oldData => {return {show : false, form : ''}})
 
     return (
         <>
-        {modalData.show && <FormsModal closeModal={closeModal} form={modalData.form} />}
-        < Header showModal = {showModal}/>
+        {modalData.show && <FormsModal closeModal={closeModal} form={modalData.form} errorHandler={errorHandler}/>}
+        < Header showModal={showModal}/>
         <section className={styles["home-banner"]}>
             <article className= {styles["home-banner-left"]}> 
                 <h4>Office Desk Mapping System</h4>
