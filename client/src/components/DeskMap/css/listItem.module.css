@@ -9,4 +9,57 @@
     border: 2px solid;
     background: bisque;
     border-radius: 0.4rem;
+    flex-wrap: wrap;
+    overflow: hidden;
+}
+
+.desk p {
+    flex: 1 1 100%;
+    text-align: center;
+    text-wrap: balance;
+}
+
+.symbol-container {
+flex: 1 1 100%;
+max-height: 50%;
+border-radius: .6rem;
+overflow: hidden;
+}
+
+.symbol-pic {
+   min-width: 100%;
+   max-height: 7rem;
+   display: block;
+   margin: 0 auto;
+}
+
+.modify-btns-container {
+    display: flex;
+    flex: 1 1 100%;
+    justify-content: flex-end;
+    align-items: center;
+    gap: .5rem;
+}
+
+.modify-btns-container button {
+    padding: 0.2rem 2rem;
+    background: lightgray;
+    border: none;
+    border-radius: 0.5rem;
+    transition: ease-in 200ms;
+}
+
+.modify-btns-container button:hover {
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}
+
+.modify-btns-container button:hover svg {
+    fill: white;
+}
+
+.modify-btns-container button svg {
+    max-width: .8rem;
+    max-height: .8rem;
 }

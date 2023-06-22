@@ -32,3 +32,20 @@
     font-size: inherit;
     font-size: 2rem;
 }
+
+@media (max-width: 1000px) {
+   .header {
+        flex-direction: column;
+   } 
+   .logo-down-layer {
+    position: initial;
+    z-index: 1;
+    left: initial;
+    top: initial;
+    transform: initial;
+   }
+
+   .logo-down-layer h1 {
+    transform: initial;
+   }
+}

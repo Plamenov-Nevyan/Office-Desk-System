@@ -6,13 +6,6 @@ import { SocketContext } from "../../contexts/socketContext";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 
-let desks = [
-    {id : 'zxcadsdds'},
-    {id : 'zxcdsds'},
-    {id : 'uyiyuk'},
-    {id : 'tujyukyu'},
-  ]
-
 
 
 export function DeskMap(){
@@ -25,6 +18,11 @@ const [showNewDeskForm, setShowNewDeskForm] = useState(false)
 const socket = useContext(SocketContext)
 const {getFromStorage} = useLocalStorage()
 const [desks, setDesks] = useState([])
+const [confModalData, setConfModalData] = useState({
+    show : false,
+    action: '',
+    deskId : ''
+})
 
 console.log(desks)
 
@@ -53,6 +51,8 @@ const onDeskValChange = (e) => {
 const onNewDeskSubmit = (e) => {
     e.preventDefault()
     socket.emit('newDeskRegister', ([newDeskValues, getFromStorage('id')]))
+    setNewDeskValues({name : '', symbol: ''})
+    setShowNewDeskForm(false)
 }
 
 useEffect(() => {
@@ -60,8 +60,6 @@ useEffect(() => {
         setDesks(desks => [...desks, newDesk])
     })
 }, [socket])
-
-
 
 return (
 <>

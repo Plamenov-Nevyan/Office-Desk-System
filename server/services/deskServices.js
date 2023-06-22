@@ -23,8 +23,24 @@ const getDesks = async (ownerId) => {
     return desks
 }
 
+const deleteDesk = async (deskId, ownerId) => {
+    try{
+ let [user, _] = await Promise.all([
+    User.findOne({_id : ownerId}).populate('desks'),
+    Desk.findByIdAndRemove(deskId)
+ ])
+ console.log(user)
+     user.desks = [...user.desks.filter(desk => desk._id.toString() !== deskId)]
+     user.markModified("desks")
+    await user.save()
+    return user.desks
+    }catch(err){
+    }
+}
+
 module.exports = {
     createDesk,
-    getDesks
+    getDesks,
+    deleteDesk
 }
 

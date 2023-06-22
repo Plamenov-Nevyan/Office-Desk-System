@@ -3,6 +3,10 @@
     list-style-type: none;
     gap: 2rem;
 }
+.main-nav-links li {
+    flex-grow: 1;
+    flex-shrink: 1;
+}
 
 .main-nav-links a {
     font-size: clamp(1rem, 4vw + 1rem, 2rem);
@@ -29,4 +33,23 @@
     background: cornflowerblue;
     border-radius: 0.7rem;
     color: chartreuse;
+}
+
+@media (max-width: 1000px){
+    .main-nav {
+        width: 100%;
+    }
+
+    .main-nav-links {
+        flex-direction: column;
+        margin: 0;
+        padding: 1rem 1rem;
+    }
+
+    .main-nav-links li {
+        text-align: center;
+         padding: 1rem;
+        background: beige;
+        border-radius: 0.5rem;
+    }
 }

@@ -11,12 +11,14 @@
 }
 
 .home-banner-left h4 {
-    font-size: clamp(2rem, 5vw + 1rem, 2.5rem);
+    font-size: clamp(1.4rem, 5vw + 1rem, 2.5rem);
+    text-wrap: balance;
 }
 
 .home-banner-left h1 {
-    font-size: clamp(2.5rem, 5vw + 1rem, 3.5rem);
+    font-size: clamp(1.8rem, 5vw + 1rem, 3.5rem);
     text-align: center;
+    text-wrap: balance;
 }
 
 .home-banner-right {
@@ -28,7 +30,21 @@
     height: auto;
 }
 
-.logo-down-layer {
-    position: relative;
+
+@media (max-width: 1000px){
+   .home-banner {
+    flex-wrap: wrap;
+   }
+
+   .home-banner-left h4 {
+    text-align: center;
+    margin: 0;
+   }
+
+   .home-banner-right {
+    flex: 1 0 100%;
+    position: absolute;
     z-index: -1;
+    opacity: 0.5;
+   }
 }

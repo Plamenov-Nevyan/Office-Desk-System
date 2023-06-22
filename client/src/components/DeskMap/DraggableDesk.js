@@ -2,7 +2,7 @@ import {ListItem} from "./ListItem";
 import { Droppable } from "react-beautiful-dnd"
 import styles from './css/board.module.css'
 
-export function DraggableDesk({list, prefix}){
+export function DraggableDesk({list, prefix, onDeleteDeskConfirmation}){
     return (
         <Droppable droppableId={`${prefix}`} >  
         {(provided, snapshot) => (  

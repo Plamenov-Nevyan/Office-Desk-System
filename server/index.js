@@ -49,6 +49,11 @@ socketIo.on('connection', (socket) => {
        let newDesk = await deskOps.createDesk(deskData[0], deskData[1])
        socketIo.to(socket.id).emit('newDeskAdded', (newDesk))
     })
+
+    socket.on('deleteDesk', async (data) => {
+        let updatedDesks = await deskOps.deleteDesk(data[0], data[1])
+        socketIo.to(socket.id).emit('receiveDesks', (updatedDesks))
+    })
 })
 expressConfig(app)
 app.use(cors())
