@@ -4,13 +4,17 @@ import { useContext } from 'react';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 
 
-export function ConfirmModal({action, deskId, onClose}){
+export function ConfirmModal({action, deskId, onClose, editValues}){
     const socket = useContext(SocketContext)
     const {getFromStorage} = useLocalStorage()
-
+    console.log(editValues)
     const onDelete = () => {
         socket.emit('deleteDesk', ([deskId, getFromStorage('id')]))
         onClose()
+    }
+
+    const onEdit = () => {
+        socket.emit('editDesk', [deskId, getFromStorage('id'), editValues])
     }
 
     return(
@@ -20,9 +24,13 @@ export function ConfirmModal({action, deskId, onClose}){
                 <h5>{
                     action === 'delete'
                     ? 'Are you sure you want to delete this desk ?'
-                    :  'Are you sure you want to modify this desk ?'
+                    :  'Are you sure you want to edit this desk ?'
                 }</h5>
-                <button onClick={() => onDelete()}>Yes</button>
+                {action === 'delete'
+                    ? <button onClick={() => onDelete()}>Yes</button>
+                    : <button onClick={() => onEdit()}>Yes</button>
+                }
+ 
                 <button onClick={() => onClose()}>Cancel</button>
         </div>
     </div>

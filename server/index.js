@@ -45,13 +45,21 @@ socketIo.on('connection', (socket) => {
        socketIo.to(socket.id).emit('receiveDesks', desks)
     })
 
-    socket.on('newDeskRegister', async (deskData) => {
-       let newDesk = await deskOps.createDesk(deskData[0], deskData[1])
+    socket.on('newDeskRegister', async (data) => {
+        let [deskData, ownerId] = [data[0], data[1]]
+       let newDesk = await deskOps.createDesk(deskData, ownerId)
        socketIo.to(socket.id).emit('newDeskAdded', (newDesk))
     })
 
     socket.on('deleteDesk', async (data) => {
-        let updatedDesks = await deskOps.deleteDesk(data[0], data[1])
+        let [deskId, ownerId] =[data[0], data[1]]
+        let updatedDesks = await deskOps.deleteDesk(deskId, ownerId)
+        socketIo.to(socket.id).emit('receiveDesks', (updatedDesks))
+    })
+
+    socket.on('editDesk', async (data) => {
+        let [deskId, ownerId, editValues] = [data[0], data[1], data[2]]
+        let updatedDesks = await deskOps.updateDesk(deskId, ownerId, editValues)
         socketIo.to(socket.id).emit('receiveDesks', (updatedDesks))
     })
 })

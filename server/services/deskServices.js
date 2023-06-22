@@ -2,7 +2,6 @@ const {Desk} = require('../Models/Desk')
 const {User} = require('../Models/User')
 
 const createDesk = async (deskData, ownerId) => {
-    console.log(deskData)
     let [newDesk, owner] = await Promise.all([
         Desk.create({...deskData}),
         User.findById(ownerId)
@@ -29,7 +28,6 @@ const deleteDesk = async (deskId, ownerId) => {
     User.findOne({_id : ownerId}).populate('desks'),
     Desk.findByIdAndRemove(deskId)
  ])
- console.log(user)
      user.desks = [...user.desks.filter(desk => desk._id.toString() !== deskId)]
      user.markModified("desks")
     await user.save()
@@ -38,9 +36,19 @@ const deleteDesk = async (deskId, ownerId) => {
     }
 }
 
+const updateDesk = async (deskId, ownerId, editValues) => {
+    try{
+        await Desk.findByIdAndUpdate(deskId, editValues)
+        let user = await User.findById(ownerId).populate('desks')    
+        return user.desks
+       }catch(err){
+        }
+}
+
 module.exports = {
     createDesk,
     getDesks,
-    deleteDesk
+    deleteDesk,
+    updateDesk
 }
 
