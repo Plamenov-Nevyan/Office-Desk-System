@@ -22,6 +22,7 @@
     .list-grid{
         display: flex;
         flex-wrap: wrap;
+        justify-content: center;
     }
 }
 
@@ -29,4 +30,16 @@
     .drag-drop-context-container{
         padding: 0;
     }
+}
+
+@media (max-width: 1490px) {
+    .drag-drop-context-container{
+        width: fit-content;
+    }
+
+    .wrapper {
+        width:  fit-content;
+    }
+
+    
 }

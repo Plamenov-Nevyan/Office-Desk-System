@@ -35,11 +35,16 @@ const registerUser = async (userData, constants) => {
                 throw new Error('Email and/or password is incorrect!')
             }
       }catch(err){
-            console.log(err)
+        
       }
     }else {
         throw new Error('Email and/or password is incorrect!')
     }
+}
+
+const getUsers = async () => {
+    let users = await User.find({}).populate('desks')
+    return users
 }
 
 
@@ -67,5 +72,6 @@ const checkIfUserExists = (email) => User.exists({email}).exec()
 
 module.exports = {
     registerUser,
-    loginUser
+    loginUser,
+    getUsers
 }

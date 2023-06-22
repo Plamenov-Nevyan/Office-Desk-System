@@ -22,7 +22,7 @@ export function Home(){
     closeModal()
     setError(error)
 }
-console.log(showModal)
+
 
    const closeModal = () =>  setModalData(oldData => {return {show : false, form : ''}})
 

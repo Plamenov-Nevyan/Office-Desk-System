@@ -7,7 +7,7 @@ import { useLocalStorage } from '../../hooks/useLocalStorage';
 export function ConfirmModal({action, deskId, onClose, editValues}){
     const socket = useContext(SocketContext)
     const {getFromStorage} = useLocalStorage()
-    console.log(editValues)
+    
     const onDelete = () => {
         socket.emit('deleteDesk', ([deskId, getFromStorage('id')]))
         onClose()

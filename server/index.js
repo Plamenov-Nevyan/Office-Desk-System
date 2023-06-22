@@ -62,6 +62,11 @@ socketIo.on('connection', (socket) => {
         let updatedDesks = await deskOps.updateDesk(deskId, ownerId, editValues)
         socketIo.to(socket.id).emit('receiveDesks', (updatedDesks))
     })
+
+    socket.on('getUsers', async () => {
+        let users = await userAuth.getUsers()
+        socketIo.to(socket.id).emit('receiveUsers', (users))
+    })
 })
 expressConfig(app)
 app.use(cors())
