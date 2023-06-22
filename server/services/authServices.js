@@ -15,10 +15,10 @@ const registerUser = async (userData, constants) => {
             return createSession(newUser.username, newUser.email, newUser._id)
 
         }catch(err){
-                throw new Error(err.message)
+                throw {message: err._message}
         }
     }else {
-    throw new Error('Email is not available!')
+    throw {message : 'Email is not available!'}
     }
 }
 
@@ -32,19 +32,23 @@ const registerUser = async (userData, constants) => {
             return createSession(user.username, user.email, user._id)
 
             }else {
-                throw new Error('Email and/or password is incorrect!')
+                throw {message : 'Email and/or password is incorrect!'}
             }
       }catch(err){
-        
+        throw{message : err._message}
       }
     }else {
-        throw new Error('Email and/or password is incorrect!')
+        throw {message : 'Email and/or password is incorrect!'}
     }
 }
 
 const getUsers = async () => {
-    let users = await User.find({}).populate('desks')
-    return users
+    try{
+        let users = await User.find({}).populate('desks')
+        return users
+    }catch(err){
+        throw {message: err._message}
+    }
 }
 
 
