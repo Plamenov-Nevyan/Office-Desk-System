@@ -17,3 +17,16 @@
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 1rem;
 }
+
+@media (max-width: 770px) {
+    .list-grid{
+        display: flex;
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 300px) {
+    .drag-drop-context-container{
+        padding: 0;
+    }
+}

@@ -63,3 +63,51 @@ overflow: hidden;
     max-width: .8rem;
     max-height: .8rem;
 }
+
+.edit-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    background: black;
+    opacity: 0.6;
+    padding: 1rem;
+    border-radius: 0.6rem;
+}
+
+.edit-form fieldset {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 10%;
+    border: none;
+    background: beige;
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+.edit-form fieldset label {
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.edit-form fieldset input:focus {
+    background-color: lightgray;
+}
+
+.edit-form button {
+    flex: 1 1 20%;
+    padding: 0.4rem 1rem;
+    background: lightcoral;
+    border: none;
+    border-radius: 0.5rem;
+    color: aliceblue;
+    font-size: 1.3rem;
+    font-weight: bold;
+    transition: ease-in 200ms;
+}
+
+.edit-form button:hover {
+    cursor: pointer;
+    background-color: red;
+    opacity: 0.6;
+    color: black;
+}

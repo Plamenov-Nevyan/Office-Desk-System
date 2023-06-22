@@ -46,7 +46,7 @@ console.log(editFormValues)
     return (
         <>
         {confModalData.show && <ConfirmModal action={confModalData.action} deskId={confModalData.deskId} onClose={onCloseModal} editValues={editFormValues}/>}
-        {showEditForm && <form>
+        {showEditForm && <form className={styles["edit-form"]}>
             <fieldset>
                 <label htmlFor='name'>New Desk Name:</label>
                 <input id='name' name='name' value={editFormValues.name} onChange={(e) => editFormValsChange(e)}/>

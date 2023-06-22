@@ -27,7 +27,7 @@
 .subheader ul > li {
     display: flex;
     align-items: center;
-    gap: .4rem;
+    flex-wrap: wrap;
 }
 
 .subheader ul > li svg {
@@ -36,21 +36,63 @@
 }
 
 .symbol-form {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    align-items: center;
+    justify-content: center;
+    background: #eee;
+    border-radius: 0.8rem;
     flex: 1 1 100%;
 }
 
 .symbol-form fieldset {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    border: none;
+    max-width: 50%;
+   
 }
 
-.symbol-form fieldset:nth-child(2) {
+.symbol-form fieldset input {
+    flex: 1 1 100%;
+    padding: 0.4rem 0.4rem;
+    border: none;
+    border-radius: 0.4rem;
+}
+
+.symbol-form button {
+    padding: 0.3rem 4rem;
+    margin-left: auto;
+    margin-right: auto;
+    background: black;
+    color: white;
+    border: none;
+    border-radius: 0.4rem;
+    font-size: 1.3rem;
+    transition: ease-in 200ms;
+}
+
+.symbol-form button:hover {
+    cursor: pointer;
+    background-color: white;
+    color: black;
+}
+
+/* .symbol-form fieldset:nth-child(2) {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-}
+} */
 
-.symbol-form fieldset:nth-child(2) label {
+/* .symbol-form fieldset:nth-child(2) label {
     flex: 1 1 100%;
+} */
+
+
+@media (max-width: 600px){
+    .subheader ul {
+        flex-direction: column;
+    }
 }
 
