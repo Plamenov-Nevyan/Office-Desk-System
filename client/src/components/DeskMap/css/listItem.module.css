@@ -111,3 +111,14 @@ overflow: hidden;
     opacity: 0.6;
     color: black;
 }
+
+.created-on {
+    font-size: .7rem;
+    word-wrap: break-word;
+    font-weight: bold;
+    display: block;
+    background: burlywood;
+    padding: 0.2rem;
+    border-radius: 0.3rem;
+    color: darkgreen;
+}

@@ -20,7 +20,7 @@ export function DeskMap({ onError }) {
   const [selectedUser, setSelectedUser] = useState({});
   const [users, setUsers] = useState("");
   let isOwnedDesks = Object.values(selectedUser).length > 0 ? false : true;
-
+console.log(desks)
   useEffect(() => {
     socket.on("error", (errors) => {
       errorHandler(errors);

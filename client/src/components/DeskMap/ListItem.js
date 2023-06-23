@@ -134,6 +134,9 @@ export function ListItem({ desk, index, isOwnedDesks }) {
                 <div className={styles["symbol-container"]}>
                   <img className={styles["symbol-pic"]} src={desk.symbol} />
                 </div>
+                <p className={styles["created-on"]}>
+                  Created on: {desk.createdAt.split("T")[0]} at {desk.createdAt.split("T")[1].split(".")[0].slice(0, 5)}
+                </p>
               </div>
             </div>
           )}
@@ -148,6 +151,9 @@ export function ListItem({ desk, index, isOwnedDesks }) {
           <div className={styles["symbol-container"]}>
             <img className={styles["symbol-pic"]} src={desk.symbol} />
           </div>
+          <p className={styles["created-on"]}>
+            Created on: {desk.createdAt.split("T")[0]} at {desk.createdAt.split("T")[1].split(".")[0].slice(0, 5)}
+          </p>
         </div>
       </div>
     );
