@@ -36,8 +36,8 @@ export function FormsModal({closeModal, form, errorHandler}){
     }, [socket])
 
     useEffect(() => {
-        socket.on('error', (err) => {
-            errorHandler(err)
+        socket.on('error', (errors) => {
+            errorHandler(errors)
         })
     }, [socket])
 

@@ -15,7 +15,8 @@ const registerUser = async (userData, constants) => {
             return createSession(newUser.username, newUser.email, newUser._id)
 
         }catch(err){
-                throw {message: err._message}
+            let errMessages = handleValidationError(err)
+                throw {messages: errMessages}
         }
     }else {
     throw {message : 'Email is not available!'}
@@ -79,3 +80,13 @@ module.exports = {
     loginUser,
     getUsers
 }
+
+function handleValidationError(err){
+    const messages = []
+    for (let field in err.errors) {
+      messages.push(err.errors[field].message)
+      console.log(err.errors[field].message)
+    }
+    return messages
+  }
+  

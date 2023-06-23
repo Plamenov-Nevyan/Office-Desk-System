@@ -5,22 +5,20 @@ import { useState } from 'react'
 import {FormsModal} from './FormsModal'
 
 
-export function Home(){
+export function Home({onError}){
    const [modalData, setModalData] = useState({
     show: false,
     form: ''
    })
-
-   const [error, setError] = useState('')
 
    const showModal = (e,form) => {   
     e.preventDefault()
     setModalData(oldData => {return {show : true, 'form' : form}})
    }
 
-   const errorHandler = (error) => {
+   const errorHandler = (errors) => {
     closeModal()
-    setError(error)
+    onError(errors)
 }
 
 

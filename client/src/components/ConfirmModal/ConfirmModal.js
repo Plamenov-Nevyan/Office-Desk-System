@@ -1,12 +1,14 @@
 import styles from './css/confirmModal.module.css'
 import { SocketContext } from '../../contexts/socketContext';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
+import { useSocketErrorHandler } from '../../hooks/useSocketErrorHandler';
 
 
 export function ConfirmModal({action, deskId, onClose, editValues}){
     const socket = useContext(SocketContext)
     const {getFromStorage} = useLocalStorage()
+    const {onError} = useSocketErrorHandler()
     
     const onDelete = () => {
         socket.emit('deleteDesk', ([deskId, getFromStorage('id')]))
@@ -16,6 +18,10 @@ export function ConfirmModal({action, deskId, onClose, editValues}){
     const onEdit = () => {
         socket.emit('editDesk', [deskId, getFromStorage('id'), editValues])
     }
+
+    useEffect('error', (errors) => {
+        onError(errors)
+    })
 
     return(
         <div className={styles["conf-modal"]}>

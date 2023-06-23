@@ -8,7 +8,7 @@ import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 
 
-export function DeskMap(){
+export function DeskMap({onError}){
 const [listLength, setListLength] = useState(2)  // the amount of desks per list
 const [newDeskValues, setNewDeskValues] = useState({
         name : '',
@@ -23,6 +23,13 @@ const [showUserSelect, setShowUserSelect] = useState(false)
 const [selectedUser, setSelectedUser] = useState({})
 const [users,setUsers] = useState('')
 let isOwnedDesks = Object.values(selectedUser).length > 0 ? false : true
+
+useEffect(() => {
+    socket.on('error', (errors) => {
+        errorHandler(errors)
+    })
+})
+
 useEffect(() => {
   socket.emit('getDesks', (getFromStorage('id')))
 }, [])
@@ -32,6 +39,8 @@ useEffect(() => {
         setDesks([...desks])
     })
 }, [socket])
+
+const errorHandler = (errors) => onError(errors)
 
 const onShowNewDeskForm = () => showNewDeskForm ? setShowNewDeskForm(false) : setShowNewDeskForm(true)
 
