@@ -1,16 +1,26 @@
 import { useState } from "react";
-import {ErrorAlert} from "../components/Alerts/ErrorAlert";
+import { ErrorAlert } from "../components/Alerts/ErrorAlert";
 
-export function useSocketErrorHandler(){
-    const [errors, setError] = useState({})
+export function useSocketErrorHandler() {
+  const [errors, setErrors] = useState({});
 
-    const onError = (errors) => setError(() =>{ return {...errors}})
+  const onError = (errorsReceived) => {
+    removeErrors()
+    setErrors(() => {
+      return { ...errorsReceived };
+    });
+  }
 
-    return {
-        SocketErrorHandler : ({children}) => <>
+  const removeErrors = () => setErrors(() => {});
+
+  return {
+    SocketErrorHandler: ({ children }) => (
+      <>
         {Object.values(errors).length > 0 && <ErrorAlert error={errors} />}
         {children}
-        </>,
-        onError
-    }
+      </>
+    ),
+    onError,
+    removeErrors,
+  };
 }
