@@ -4,22 +4,22 @@ import { ConfirmModal } from "../ConfirmModal/ConfirmModal";
 import { useState, useContext } from "react";
 
 export function ListItem({ desk, index, isOwnedDesks }) {
-  const [confModalData, setConfModalData] = useState({
+  const [confModalData, setConfModalData] = useState({     //confirmation modal data for edit/delete action
     show: false,
-    action: "",
+    action: "",                 
     deskId: "",
   });
 
-  const [editFormValues, setEditFormValues] = useState({
+  const [editFormValues, setEditFormValues] = useState({ //edit form controlled inputs
     name: "",
     symbol: "",
   });
 
-  const [showEditForm, setShowEditForm] = useState(false);
+  const [showEditForm, setShowEditForm] = useState(false); // hide/show edit form
 
-  const toggleEditForm = (e) => {
+  const toggleEditForm = (e) => {   //toggle between confirmation modal and edit form
     if (showEditForm) {
-      setShowEditForm(false);
+      setShowEditForm(false);  
     } else {
       if (confModalData.show) {
         onCloseModal();
@@ -34,7 +34,7 @@ export function ListItem({ desk, index, isOwnedDesks }) {
   const onCloseModal = () =>
     setConfModalData(() => {
       return { show: false, action: "", deskId: "" };
-    });
+    });  // empty confirmation modal when closing
 
   const onEditConfirm = (e) => {
     e.preventDefault();

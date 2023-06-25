@@ -9,15 +9,20 @@ export function ConfirmModal({ action, deskId, onClose, editValues }) {
   const { getFromStorage } = useLocalStorage();
   const { onError } = useSocketErrorHandler();
 
+  // Confirm desk delete, and emit socket event
   const onDelete = () => {
     socket.emit("deleteDesk", [deskId, getFromStorage("id")]);
     onClose();
   };
 
+  
+  // Confirm desk edit, and emit socket event
   const onEdit = () => {
     socket.emit("editDesk", [deskId, getFromStorage("id"), editValues]);
   };
 
+  
+  // Update central error state to be transffered and rendered in ErrorAlert component
   useEffect("error", (errors) => {
     onError(errors);
   }, [socket]);

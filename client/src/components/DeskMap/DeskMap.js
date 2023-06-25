@@ -6,44 +6,49 @@ import { SocketContext } from "../../contexts/socketContext";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 export function DeskMap({ onError }) {
-  const [listLength, setListLength] = useState(2); // the amount of desks per list
-  const [newDeskValues, setNewDeskValues] = useState({
-    name: "",
+  const [listLength, setListLength] = useState(2); // the amount of desks per list settable by select input on the page
+  const [newDeskValues, setNewDeskValues] = useState({  // controlled inputs for create form
+    name: "",  
     symbol: "",
   });
-  const [showNewDeskForm, setShowNewDeskForm] = useState(false);
+  const [showNewDeskForm, setShowNewDeskForm] = useState(false); 
   const socket = useContext(SocketContext);
   const { getFromStorage } = useLocalStorage();
-  const [desks, setDesks] = useState([]);
-
-  const [showUserSelect, setShowUserSelect] = useState(false);
-  const [selectedUser, setSelectedUser] = useState({});
+  const [desks, setDesks] = useState([]);  // desks which we receive through the socket event
+  const [showUserSelect, setShowUserSelect] = useState(false); // show or hide the div showing list of all registered users
+  const [selectedUser, setSelectedUser] = useState({}); //the data of the user for who we want to see created desks
   const [users, setUsers] = useState("");
-  let isOwnedDesks = Object.values(selectedUser).length > 0 ? false : true;
-console.log(desks)
+
+  let isOwnedDesks = Object.values(selectedUser).length > 0 ? false : true; //determine if user is selected or not to pass to children
+
   useEffect(() => {
+    // Error handling through the custom hook for central error state
     socket.on("error", (errors) => {
       errorHandler(errors);
     });
   },[socket]);
 
   useEffect(() => {
+    // on component mount, get existing desks
     socket.emit("getDesks", getFromStorage("id"));
   }, []);
 
   useEffect(() => {
+    // set received desks from backend
     socket.on("receiveDesks", (desks) => {
       setDesks([...desks]);
     });
   }, [socket]);
 
   useEffect(() => {
+    // Receive newly created desk and add it to state
     socket.on("newDeskAdded", (newDesk) => {
       setDesks((desks) => [...desks, newDesk]);
     });
   }, [socket]);
 
   useEffect(() => {
+    //Receive registered users for selection and save the to state
     socket.on("receiveUsers", (users) => {
       setUsers({ ...users });
       setShowUserSelect(true);
@@ -65,6 +70,7 @@ console.log(desks)
   };
 
   const onNewDeskSubmit = (e) => {
+    // emit event for creating new desk and empty + close create form
     e.preventDefault();
     socket.emit("newDeskRegister", [newDeskValues, getFromStorage("id")]);
     setNewDeskValues({ name: "", symbol: "" });
@@ -72,6 +78,7 @@ console.log(desks)
   };
 
   const onShowUserSelect = () => {
+    // get registered users for selection  when user wants to see someone else's desks
     if (showUserSelect) {
       setShowUserSelect(false);
     } else {
@@ -80,17 +87,20 @@ console.log(desks)
   };
 
   const onUserSelect = (userToSelect) => {
+    // set selected user state when clicking on their username and close the div showing users for selection
     setSelectedUser(userToSelect);
     onShowUserSelect();
   };
+
   const backToOwnDesk = () => {
+    // empty user selection and get back owned desks
     setSelectedUser((selected) => {
       return {};
     });
     socket.emit("getDesks", getFromStorage("id"));
   };
 
-  const onListLengthChange = (e) => setListLength(() => Number(e.target.value));
+  const onListLengthChange = (e) => setListLength(() => Number(e.target.value)); //set desired list length to pass to children
 
   return (
     <>

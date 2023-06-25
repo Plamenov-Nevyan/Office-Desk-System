@@ -2,7 +2,7 @@ import styles from "./css/alerts.module.css";
 import { useSocketErrorHandler } from "../../hooks/useSocketErrorHandler";
 
 export const ErrorAlert = (errors) => {
-  console.log(errors)
+  // Receive errors from the custom hook for central error handling  and extract their messages to be rendered
   let errorMessages = Object.values(errors)[0].messages;
   const { removeErrors } = useSocketErrorHandler();
 

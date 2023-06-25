@@ -54,7 +54,7 @@ const loginUser = async (userData) => {
 
 const getUsers = async () => {
   try {
-    let users = await User.find({}).populate("desks");
+    let users = await User.find({}).select("-password").populate("desks");
     return users;
   } catch (err) {
     let errMessages = handleValidationError(err);

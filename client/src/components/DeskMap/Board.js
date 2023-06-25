@@ -2,16 +2,19 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import styles from "./css/board.module.css";
 import { useEffect, useState } from "react";
 import { DraggableDesk } from "./DraggableDesk";
-let listsMain = ["1", "2", "3"];
 
 export function Board({ desks, listLength, isOwnedDesks }) {
   const [lists, setLists] = useState({});
 
   useEffect(() => {
-    setLists({ ...generateLists() }); // setting new lists state in the form of an object with lists as properties and decks as nested objects
+    // setting new lists state in the form of an object with lists as properties and desks as nested objects
+    // triggers everytime when a desk array is passed and generates the amount of desks per list according to the listLength variable
+    setLists({ ...generateLists() }); 
   }, [desks, listLength]);
 
   const generateLists = () => {
+  // Create array for processing from existing desks state and loop through it while getting the amount of desks to be in a list 
+  // while creating a prefix for every list
     let desksCopy = desks.slice(0);
     let createdLists = {};
     for (let i = 0; i < desksCopy.length; i += listLength) {
@@ -37,9 +40,11 @@ export function Board({ desks, listLength, isOwnedDesks }) {
 
   const onDragEnd = (result) => {
     // react-beautiful-dnd function that serves as event listener when dropping a draggable desk
+   // with result being an event object, that allows us to manipulate the lists order, if the user drops the desk in non-droppable area
+  //  the function simply returns
     if (!result.destination) {
       return;
-    } // with result being an event object, that allows us to manipulate the lists order
+    }
     let newListOrder = { ...lists }; // ---> making a deep copy of the lists state for manipulation
     let sourceList = newListOrder[result.source.droppableId]; // ---> retrieving the list from which we move the desk
     const [deskToMove, movingToList] = removeFromLists(
@@ -56,6 +61,8 @@ export function Board({ desks, listLength, isOwnedDesks }) {
     setLists({ ...newListOrder });
   };
 
+  //  If isOwnedDesks (user wants to see  his own desks), return Draggable items with Drop area, else return static area with desks created
+  //  by the selected user in DeskMap component
   if (isOwnedDesks) {
     return (
       <div className={styles["drag-drop-context-container"]}>

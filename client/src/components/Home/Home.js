@@ -10,6 +10,14 @@ export function Home({ onError }) {
     form: "",
   });
 
+// if(state){
+//   setModalData(() => {
+//     return {
+//       show: true,
+//       form: 'login'
+//     }
+//   })
+// } 
   const showModal = (e, form) => {
     e.preventDefault();
     setModalData((oldData) => {

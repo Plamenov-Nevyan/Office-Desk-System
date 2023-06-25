@@ -11,6 +11,7 @@ export function FormsModal({ closeModal, form, errorHandler }) {
   const socket = useContext(SocketContext);
   const navigate = useNavigate();
 
+  // According to which form we have opened, different event are being emited
   const onSubmitHandler = (e, userData) => {
     e.preventDefault();
     form === "register"
@@ -19,6 +20,7 @@ export function FormsModal({ closeModal, form, errorHandler }) {
   };
 
   useEffect(() => {
+    // on successful register or login set the received session in storage and navigate to the desk map
     socket.on("userRegistered", (session) => {
       setToStorage(session);
       closeModal();
