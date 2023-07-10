@@ -4,7 +4,7 @@ import { useLocalStorage } from "../../../hooks/useLocalStorage"
 export const PrivateRoute = () => {
   const {storedData} = useLocalStorage()
 
-  if(!storedData.session){
+  if(Object.values(storedData).length <= 0){
     return <Navigate  to={"/"} replace/>
   }
   else {
